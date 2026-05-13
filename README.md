@@ -2,6 +2,7 @@
 
 The documentation takes you through the process of creating a simple microservices architecture and then containerizing it using Docker for fast and efficient deployment.
 
+This project is a containerized microservice architecture built with Python and Flask. It demonstrates a decoupled backend system where independent services handle specific domains (Users and Tasks), communicating with each other internally, and exposing endpoints to a vanilla HTML/JavaScript frontend via an API Gateway.
 
 ## Tech Stack
 
@@ -232,6 +233,11 @@ if __name__=="__main__":
 
 
 ## Deployment using Docker
+
+The entire backend ecosystem is containerized using Docker, ensuring perfect parity across local, testing, and production environments.
+1. Base Image: python:3.11-slim (Chosen for a lightweight, optimized footprint).
+2. Registry: The application image is built and pushed to Docker Hub.
+3. Orchestration: Docker Compose is used to define the multi-container environment, manage port mapping, and wire the internal container network.
 
 Deploying our application in a containerized manner leads to : 
 
