@@ -30,7 +30,7 @@ Libraries Needed :
 
 #### A. User Service : 
 
-```bash
+```python
 # A microservice for user service
 
 from flask import Flask, request, jsonify
@@ -66,7 +66,7 @@ if __name__=="__main__":
 
 #### B. Task Service : 
 
-```bash
+```python
 # A microservice for the task service
 
 import requests
@@ -113,7 +113,7 @@ if __name__=="__main__":
 
 #### C. Gateway Service : 
 
-```bash
+```python
 # A gateway service enabling the user and task service to communicate with each other
 
 import requests
@@ -148,7 +148,7 @@ if __name__=="__main__":
 
 #### D. Frontend Service : 
 
-```bash
+```html
     <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -243,7 +243,7 @@ Deploying our application in a containerized manner leads to :
 ### Steps : 
 #### 1. Create a requirements.txt 
 The requirements.txt file acts as the official blueprint for all third-party libraries (like Flask) our application needs to run. Because our Docker base image is a blank slate, this file tells the container exactly which packages to download and install during the build process. This guarantees a consistent, automated, and version-controlled environment across all local machines and production servers.
-```bash
+```text
 requirements.txt
 
     Flask
@@ -276,7 +276,7 @@ Dockerfile
 A .yml file is used as a coniguration file for our application. It holds the instructions, version and the type (Service, Deployement, Storage) of container created.
 
 
-```bash
+```yaml
 docker-compose.yml
 
     version: '3.8'
@@ -318,6 +318,7 @@ docker-compose.yml
 Now that we have our developed application and the Dockerfile, docker-compose.yml, and the requirements.txt saved in our project folder, we can deploy it on docker using docker commands in terminal.
 
 Project Folder Structure : 
+
 <img width="540" height="194" alt="Screenshot 2026-05-13 151344" src="https://github.com/user-attachments/assets/5ce90604-b83d-473f-be25-08f6ed4db6c2" />
 
 
@@ -325,36 +326,46 @@ Now, navigate to the project folder in CMD and type in the docker commands :
 ```bash
 docker-compose up --build
 ```
+
 <img width="419" height="112" alt="image" src="https://github.com/user-attachments/assets/3bd24210-00b6-4167-b097-bd28eb356ae0" />
+
 
 The docker-compose up --build command enables us to run mulitple files at once, unlike manual local hosting where we have to start each microservice on a seperate terminal and start then one by one.
 The microservices are containerized and the image is created in the docker dashboard! 
+
 <img width="572" height="395" alt="image" src="https://github.com/user-attachments/assets/3d3ee11b-62be-4f57-9965-129d2e6b4db7" />
 
 The containers are up and running!
 
 Docker Dashboard View : Running containers
+
 <img width="952" height="332" alt="image" src="https://github.com/user-attachments/assets/e6518a39-0d09-4c47-9029-e5bb86a48428" />
 
 We then go to the go to the server where out application is deployed (Here, we deployed it on python test server 8000)
 The Application is now hosted
+
 <img width="352" height="416" alt="image" src="https://github.com/user-attachments/assets/1647e2f3-460a-403a-b1ca-54e28ed20f9f" />
 
 We can interact with the application and all interactions and status codes are logged in the terminal on Docker Dashboard: 
+
 <img width="308" height="416" alt="image" src="https://github.com/user-attachments/assets/47d8234f-e3b0-41d2-a7d0-1d1feb8d31ae" />
 
 Docker Dashboard View of logs : 
 A. User Service : 
+
 <img width="773" height="323" alt="image" src="https://github.com/user-attachments/assets/5e27d0e8-4378-4a02-9cd0-99e1a1bdac93" />
 
 B. Task Service : 
+
 <img width="754" height="304" alt="image" src="https://github.com/user-attachments/assets/44795cf6-2b36-43dc-8ad5-2c33117b6e27" />
 
 C. Gateway Service : 
+
 <img width="767" height="338" alt="image" src="https://github.com/user-attachments/assets/fb381e2b-0f22-4b5b-ab2a-c89bfd0259bb" />
 
 
 To stop the containers, we can CTRL + C in CMD, or stop then manually from Docker Dashboard. 
+
 <img width="533" height="136" alt="image" src="https://github.com/user-attachments/assets/5b941049-3f38-4854-ab73-8290f11964ed" />
 
 We can create images of our containerized application and upload it on docker hub for other users to pull it and try our application without the hassle of dependency or installing issues!
