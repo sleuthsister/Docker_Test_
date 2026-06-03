@@ -1,0 +1,34 @@
+docker-compose.yml
+
+    version: '3.8'
+    services:
+    # 1. The User Service Container
+    user-service:
+        build: .
+        command: python user_service.py
+        ports:
+        - "3001:3001"
+
+    # 2. The Task Service Container
+    task-service:
+        build: .
+        command: python task_service.py
+        ports:
+        - "3002:3002"
+
+    # 3. The API Gateway Container
+    gateway:
+        build: .
+        command: python gateway.py
+        ports:
+        - "3000:3000"
+
+    # 4. The Frontend Server Container
+    frontend:
+        image: python:3.11-slim
+        working_dir: /app
+        volumes:
+        - .:/app
+        command: python -m http.server 8000
+        ports:
+        - "8000:8000"
