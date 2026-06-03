@@ -1,0 +1,79 @@
+    <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="'UTF-8">
+        <title>My Microservices App</title>
+        <style>
+            body {font-family:Arial, sans-serif; padding:20px;}
+            .box {border:1px solid #ccc; padding: 15px; margin-bottom:20px; max-width:400px;}
+            input,button {margin-top:10px; padding:10px;}
+        </style>
+    </head>
+    <body>
+        <h1>Microservices Dashboard</h1>
+        <div class="box">
+            <h3>Find a User</h3>
+            <button onclick="fetchUser()">Get User 1</button>
+            <pre id="user-output">Waiting for data..</pre>
+        </div>
+        <div class="box">
+            <h3>Create a Task</h3>
+            <input type="text" id="userIdInput" placeholder="Enter User ID (e.g. 2)"><br>
+            <input type="text" id="taskNameInput" placeholder="Enter Task Name"><br>
+            <button onclick="createTask()">Submit Task</button>
+            <pre id="task-output">Waiting for data..</pre>
+        </div>
+
+        <script>
+        const GATEWAY_URL = "http://localhost:3000";
+
+        async function fetchUser() {
+            try {
+                let response = await fetch(GATEWAY_URL + "/users/1");
+                
+                // DEFENSIVE CHECK: Did the server return HTML instead of JSON?
+                let text = await response.text(); 
+                try {
+                    let data = JSON.parse(text); // Try to parse as JSON
+                    document.getElementById("user-output").innerText = JSON.stringify(data, null, 2);
+                } catch (e) {
+                    // If it fails, print the raw text/HTML to the screen
+                    document.getElementById("user-output").innerText = "CRASH! Server returned: \n" + text;
+                }
+            } catch (error) {
+                document.getElementById("user-output").innerText = "Network Error: Is the Gateway running?";
+            }
+        }
+
+        async function createTask() {
+            let userId = document.getElementById("userIdInput").value;
+            let taskName = document.getElementById("taskNameInput").value;
+
+            let payload = {
+                "userId": userId,
+                "taskName": taskName
+            };
+
+            try {
+                let response = await fetch(GATEWAY_URL + "/tasks", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                // DEFENSIVE CHECK: Did the server return HTML instead of JSON?
+                let text = await response.text();
+                try {
+                    let data = JSON.parse(text); // Try to parse as JSON
+                    document.getElementById("task-output").innerText = JSON.stringify(data, null, 2);
+                } catch (e) {
+                    // If it fails, print the raw text/HTML to the screen
+                    document.getElementById("task-output").innerText = "CRASH! Server returned: \n" + text;
+                }
+            } catch (error) {
+                document.getElementById("task-output").innerText = "Network Error: Is the Gateway running?";
+            }
+        }
+    </script>
+    </body>
+</html>
